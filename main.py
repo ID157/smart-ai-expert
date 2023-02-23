@@ -27,20 +27,20 @@ def chunk_paper(name):
 if argv[1] == 'add':
   progress = 0
   documents_length = 0
-  # try:
-  index = GPTSimpleVectorIndex.load_from_disk('index.json')
-  documents = chunk_paper(argv[2])
-  documents_length = documents
-  for doc in documents:
-    progress += 1
-    print(f"progress:{progress}/{len(documents)}")
-    index.insert(doc)
-    # rate limitもあるので...
-    sleep(1)
-    index.save_to_disk('index.json')
-  # except:
-  #   index.save_to_disk('index_tmp.json')
-  #   print(f"Error! progress:{progress}/{documents_length}")
+  try:
+    index = GPTSimpleVectorIndex.load_from_disk('index.json')
+    documents = chunk_paper(argv[2])
+    documents_length = documents
+    for doc in documents:
+      progress += 1
+      print(f"progress:{progress}/{len(documents)}")
+      index.insert(doc)
+      # rate limitもあるので...
+      sleep(1)
+      index.save_to_disk('index.json')
+  except:
+    index.save_to_disk('index_tmp.json')
+    print(f"Error! progress:{progress}/{documents_length}")
 
 
 # init index
